@@ -6,11 +6,13 @@ A hands-on journey through web application security, Burp Suite mastery, and cus
 
 This repository documents my learning path in cybersecurity, focusing on:
 
-    🔥 Burp Suite Labs: Walkthroughs of PortSwigger’s Web Security Academy labs (SQLi, XSS, CSRF, etc.).
+🔥 Burp Suite Labs: Walkthroughs of PortSwigger’s Web Security Academy labs (SQLi, XSS, CSRF, etc.).
 
-    🐍 Python Scripts: Custom tools for vulnerability scanning, exploit automation, and HTTP request manipulation.
+🐍 Python Scripts: Custom tools for vulnerability scanning, exploit automation, and HTTP request manipulation.
 
-    📝 Detailed Notes: Methodology, tricks, and troubleshooting tips for pentesting challenges.
+📝 Detailed Notes: Methodology, tricks, and troubleshooting tips for pentesting challenges.
 
-    🛠️ Real-World Applications: How these skills translate into bug bounties, CTFs, and security assessments.
-![images](https://github.com/user-attachments/assets/0eaac1df-276c-44f9-a963-e5c6006d0456)
+🛠️ Real-World Applications: How these skills translate into bug bounties, CTFs, and security assessments.
+
+
+                                    ![images](https://github.com/user-attachments/assets/0eaac1df-276c-44f9-a963-e5c6006d0456)
