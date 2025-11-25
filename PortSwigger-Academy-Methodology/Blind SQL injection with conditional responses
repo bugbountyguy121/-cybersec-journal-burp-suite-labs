@@ -1,0 +1,2 @@
+Lab Walkthrough: Boolean-Based Blind SQL Injection:
+This methodology details the systematic extraction of unknown data (e.g., an administrator's password) from an application vulnerable to Boolean-Based Blind SQL Injection.
