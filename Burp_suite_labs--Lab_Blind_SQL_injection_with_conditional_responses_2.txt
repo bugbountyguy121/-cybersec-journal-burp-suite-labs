@@ -1,0 +1,102 @@
+## Lab: Blind SQL injection with conditional responses
+well during this write up i want to tell this bro you don't need to remmber all of the spelling like letter by letter its smarter to take batter notes and build a methodology around it like if you could remember the lab today and solve it all by your self be sure that you wont do it within the next week so you batter take good notes 
+
+
+
+First, we want to run this so we can identfy how the welcome back message look like 
+
+
+
+
+
+well now i know it lets move on to the next one 
+so in this case its like you set an eqesion 
+(SELECT 'a' FROM users WHERE username='administrator')='a
+its like the ferst part = the second part
+
+now we need to move on to the next one : 
+' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>1)='a
+well at this point its like pure math 
+
+during this phase we need to keep gessing the lenght of the password:
+
+' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>1)='a
+
+
+as you can see in this case we ask if the lenght of the password is 19 chars
+the respond was something like 
+
+
+well now i need  a step by step explication for this 
+
+watching some one who is solving the labs is okey but bro rewatcing something you've already watch is one of the bigest wast of time 
+so as we can see that it also works without the URL encoding
+
+so what we can do in this case? instead of manually trying to find how long is the password we can try doing this using the burp intruder 
+☐ Don't fully realy on Burp from one time to anoter try the other one wish is open source 
+This is the paylaod i've put in on burp:
+
+' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>1)='a
+
+
+
+This is the configuration on the burp intruder 
+
+
+
+as you can see all the pages with the welcome back message are in the same message once the lenght of the password passes the limit all the responses got smaler in size because it didnt include the  ‘welcome back’ message 
+
+
+is its like each time asking is the password lonnger than 19 it said yes once we ask it about if the password longer than 20 no welcome back message wish means no 
+
+now the next paylaod we are going to work on is this:
+' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='administrator')='a
+what this actually means?
+we extract the password using the substring then only selecting the frist letter and check if for it using bruteforce 
+
+
+
+
+Configuring the Payloads:
+
+
+
+
+Setting up the grep matcer:
+
+
+And The the magic happens:
+
+
+
+The problem in this case is tihs 
+
+' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='administrator')='a
+we want the brute froce from a-z 0-9 on each placement of the password so we have 2 places to  etration 
+
+
+So this is where we need to change the type of the attack
+
+
+So in this case this is what we look for 
+
+
+What we have now in burp is tow types of the paylaods 
+
+
+The first one wish is 1-1, and the second one wish is 2-a
+
+
+
+Then, wait forever for the scan to finish
+
+
+
+
+well finally got someting like this and solved te labs 
+
+
+
+
+
+
