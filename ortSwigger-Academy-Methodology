@@ -1,0 +1,15 @@
+The PortSwigger Academy Master Vault
+
+This repository serves as my comprehensive, actively maintained knowledge base for the entire PortSwigger Web Security Academy curriculum. It is more than just a collection of lab solutions; it is a living methodology designed to streamline future web application penetration tests and aid in competitive bug bounty hunting.
+
+Key Focus Areas:
+
+    100% Coverage Goal: Dedicated to documenting all labs across every major vulnerability class, from foundational concepts to advanced, multi-step attack chains.
+
+    Methodology & Structure: Notes are organized hierarchically (via CherryTree export) to reflect a logical testing process. Each write-up focuses on the 'Why' as much as the 'How', detailing the thought process behind vulnerability discovery and exploitation.
+
+    Bug Bounty Ready: The documentation is formatted for quick reference, ensuring rapid recall of successful Payloads, Request Templates, and Bypass Techniques proven effective against PortSwigger's realistic web environments.
+
+    Tooling Integration: Specific emphasis is placed on the configuration and usage of Burp Suite Professional, including custom extensions, intruder settings, and manual payload construction for complex vulnerabilities (e.g., race conditions, blind injections).
+
+This repository is the product of hundreds of hours of hands-on practice, intended to be the definitive reference for applying PortSwigger principles in any real-world security assessment.
