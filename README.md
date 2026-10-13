@@ -63,42 +63,42 @@ This map shows how the topics connect and which direction to take. The path is d
 
 ```mermaid
 flowchart TD
-    A[START: HTTP, sessions, browser/server model, Burp basics] --> B[NOW: Finish SQL injection path<br/>37/51 → 51/51]
-    B --> C[Build broad coverage<br/>Server-side vulnerabilities: Apprentice 0/52]
-    C --> D[Identity and permissions]
-    D --> D1[Authentication vulnerabilities 0/23]
-    D --> D2[Access control and IDOR topic study]
-    D1 --> E[Input and server-side processing]
+    A["START: HTTP, sessions, browser/server model, Burp basics"] --> B["NOW: Finish SQL injection path<br/>37/51 → 51/51"]
+    B --> C["Build broad coverage<br/>Server-side vulnerabilities: Apprentice 0/52"]
+    C --> D["Identity and permissions"]
+    D --> D1["Authentication vulnerabilities 0/23"]
+    D --> D2["Access control and IDOR topic study"]
+    D1 --> E["Input and server-side processing"]
     D2 --> E
-    E --> E1[Path traversal 0/24]
-    E --> E2[File upload 1/29]
-    E --> E3[NoSQL injection 0/29]
-    E --> E4[SSRF 0/65]
-    E1 --> F[API and application integration]
+    E --> E1["Path traversal 0/24"]
+    E --> E2["File upload 1/29"]
+    E --> E3["NoSQL injection 0/29"]
+    E --> E4["SSRF 0/65"]
+    E1 --> F["API and application integration"]
     E2 --> F
     E3 --> F
     E4 --> F
-    F --> F1[API testing (progress count not included in snapshot)]
-    F --> F2[GraphQL API vulnerabilities 0/21]
-    F --> F3[CORS 0/14]
-    F --> F4[WebSockets vulnerabilities 0/55]
-    F1 --> G[Browser trust and application state]
+    F --> F1["API testing (progress count not included in snapshot)"]
+    F --> F2["GraphQL API vulnerabilities 0/21"]
+    F --> F3["CORS 0/14"]
+    F --> F4["WebSockets vulnerabilities 0/55"]
+    F1 --> G["Browser trust and application state"]
     F2 --> G
     F3 --> G
     F4 --> G
-    G --> G1[CSRF 0/46]
-    G --> G2[Clickjacking 0/29]
-    G --> G3[Race conditions 0/35]
-    G --> G4[Web cache deception 0/36]
-    G1 --> H[Advanced / specialised branches]
+    G --> G1["CSRF 0/46"]
+    G --> G2["Clickjacking 0/29"]
+    G --> G3["Race conditions 0/35"]
+    G --> G4["Web cache deception 0/36"]
+    G1 --> H["Advanced / specialised branches"]
     G2 --> H
     G3 --> H
     G4 --> H
-    H --> H1[Prototype pollution 0/19]
-    H --> H2[Web LLM attacks 0/30]
-    H1 --> I[VDP readiness gate]
+    H --> H1["Prototype pollution 0/19"]
+    H --> H2["Web LLM attacks 0/30"]
+    H1 --> I["VDP readiness gate"]
     H2 --> I
-    I[VDP readiness gate<br/>Scope → map → hypothesis → safe proof → report]
+    I["VDP readiness gate<br/>Scope → map → hypothesis → safe proof → report"]
 
     classDef current fill:#d1fae5,stroke:#047857,color:#064e3b,stroke-width:2px;
     classDef foundation fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a;
