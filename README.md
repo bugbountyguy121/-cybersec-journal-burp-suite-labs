@@ -89,7 +89,7 @@ flowchart TD
     G --> G1[CSRF 0/46]
     G --> G2[Clickjacking 0/29]
     G --> G3[Race conditions 0/35]
-    G --> G4[Web cache deception 0/19]
+    G --> G4[Web cache deception 0/36]
     G1 --> H[Advanced / specialised branches]
     G2 --> H
     G3 --> H
@@ -159,7 +159,7 @@ The progress values below are copied from the dashboard text I supplied. They ar
 | 12 | **Cross-site request forgery (CSRF)** | **0/46** | 🟠 Browser trust | [Open learning path](https://portswigger.net/web-security/learning-paths/csrf) |
 | 13 | **Clickjacking (UI redressing)** | **0/29** | 🟠 Browser trust | [Open learning path](https://portswigger.net/web-security/learning-paths/clickjacking) |
 | 14 | **Race conditions** | **0/35** | 🟣 Advanced state handling | [Open learning path](https://portswigger.net/web-security/learning-paths/race-conditions) |
-| 15 | **Web cache deception** | **0/19** | 🟣 Advanced request/cache behaviour | [Open learning path](https://portswigger.net/web-security/learning-paths/web-cache-deception) |
+| 15 | **Web cache deception** | **0/36** | 🟣 Advanced request/cache behaviour | [Open learning path](https://portswigger.net/web-security/learning-paths/web-cache-deception) |
 | 16 | **Prototype pollution** | **0/19** | 🟣 Advanced JavaScript/runtime behaviour | [Open learning path](https://portswigger.net/web-security/learning-paths/prototype-pollution) |
 | 17 | **Web LLM attacks** | **0/30** | 🟣 Specialised / later | [Open learning path](https://portswigger.net/web-security/learning-paths/llm-attacks) |
 
