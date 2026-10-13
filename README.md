@@ -1,263 +1,255 @@
-# 🔐 Cybersecurity Journal — Web Application Security
+# 🔐 Cybersecurity Journal — PortSwigger Web Security Academy
 
 > **Understand the application. Form a hypothesis. Test it carefully. Explain the evidence.**
 
-This repository is my hands-on journey into web application security, Burp Suite, and eventually my first valid Vulnerability Disclosure Program (VDP) report. I use it to record not only *what* I learn, but *how I reason about it*.
+This repository is my practical journey into web application security, Burp Suite, and eventually my first valid Vulnerability Disclosure Program (VDP) report.
 
-I'm especially interested in learning how to learn: building mental models, connecting concepts, practising deliberately, reducing distractions, and developing the focus to understand a subject deeply instead of rushing through checklists.
+I'm not here just to collect completed labs or memorise payloads. I want to understand how web applications work, how security boundaries fail, how to investigate those failures, and how to explain what the evidence proves. I'm also building a better way to learn: fewer distractions, deeper understanding, deliberate practice, and notes I can return to without having to figure out my direction all over again.
 
-**This is a working journal, not a claim of expertise.** Checkboxes show the progress I have recorded here; a topic is not complete just because I watched a video or copied a payload.
+**This is a learning dashboard, not a claim of expertise.** The progress below is the snapshot I recorded from my PortSwigger dashboard. It does not update automatically; I will update it as I work.
 
 ---
 
 ## 🧭 Quick Navigation
 
-- [My mission](#-my-mission)
-- [Where I am right now](#-where-i-am-right-now)
-- [Roadmap and progress board](#-roadmap-and-progress-board)
-- [My testing methodology](#-my-testing-methodology)
-- [PortSwigger learning order](#-portswigger-learning-order)
-- [My lab notes](#-my-lab-notes)
-- [My daily focus routine](#-my-daily-focus-routine)
+- [Current focus](#-where-i-am-right-now)
+- [Visual roadmap / mind map](#️-visual-roadmap--mind-map)
+- [Recommended order](#-the-order-i-will-follow)
+- [All my learning paths and progress](#-all-learning-paths--my-progress)
+- [My testing methodology](#-the-method-i-will-use-for-every-lab)
+- [Lab-note template](#-lab-note-template)
+- [Focus routine](#-focus-routine)
 - [Journey to my first VDP report](#-journey-to-my-first-vdp-report)
 - [Definition of done](#-definition-of-done)
 
----
-
-## 🎯 My Mission
-
-I want to become capable of approaching an unfamiliar web application, understanding how it works, recognising where trust and permissions matter, testing sensible security hypotheses, and explaining the evidence clearly.
-
-My learning principles:
-
-- **Understand before memorising.** Know why a vulnerability exists, not only which payload triggered it.
-- **Map before testing.** Learn the application's features, roles, requests, parameters, and state before testing randomly.
-- **Change one variable at a time.** Keep experiments understandable and results comparable.
-- **Prove, don't assume.** Separate observed behaviour from guesses and demonstrated impact from speculation.
-- **Explain it in my own words.** If I cannot explain a concept without copying notes, I need to revisit it.
-- **Build evidence of skill.** Publish useful notes, reproducible lab reasoning, and small tools as I develop them.
-- **Protect my focus.** Work on one main topic at a time and value consistency over marathon sessions.
-
 ## 📍 Where I Am Right Now
 
-> **Current phase:** Phase 1 — Web application mapping and Burp Suite fundamentals  
-> **Current learning source:** [PortSwigger Web Security Academy](https://portswigger.net/web-security/learning-paths)  
-> **Immediate goal:** Understand one complete browser-to-server interaction and document it clearly.
+> **Current sprint:** Finish the SQL injection learning path.
+>
+> **PortSwigger progress snapshot:** SQL injection **37/51** · File upload **1/29** · Server-side vulnerabilities (Apprentice) **0/52**.
+>
+> **Immediate next action:** Continue the SQL injection path from the Academy's **Resume** button. Work through the remaining content deliberately, then revisit the hardest concepts without following the solution.
 
-### This session's focus
+### This session's checklist
 
-- [ ] Choose one Academy lab and read its objective before testing.
-- [ ] Use Burp to capture the relevant HTTP request and response.
-- [ ] Identify the method, path, parameters, cookies, status code, and meaningful response changes.
-- [ ] Explain what the feature should do under normal conditions.
-- [ ] Write one testable security hypothesis before trying variations.
-- [ ] Record the result and one question I still have.
+- [ ] Open the [SQL injection learning path](https://portswigger.net/web-security/learning-paths/sql-injection) and resume where I stopped.
+- [ ] Read the lab objective and identify the application behaviour I need to understand.
+- [ ] Capture the baseline request and response in Burp Suite.
+- [ ] Write one hypothesis before testing payload variations.
+- [ ] Change one variable at a time and record what the response tells me.
+- [ ] Explain the root cause and a relevant defence in my own words.
+- [ ] Update my progress and write the next action before ending the session.
 
-**Next action:** Complete the first unchecked task above. When I finish a session, update this section so the next session starts with a clear action—not with deciding what to study.
+**Rule:** I do not start three new topics because one lab gets difficult. I record the obstacle, try a smaller experiment, and return to the same question.
 
 <details>
-<summary><strong>Session hand-off note — update after each study session</strong></summary>
+<summary><strong>Session hand-off note — fill this in before stopping</strong></summary>
 
 - **Date:** YYYY-MM-DD
-- **Topic / lab:**
+- **Current path / lab:**
 - **What I understand now:**
 - **What I tested:**
 - **Evidence / result:**
 - **What still confuses me:**
-- **Next small action:**
+- **Next exact action:**
 
 </details>
 
 ---
 
-## 🗺️ Roadmap and Progress Board
+## 🗺️ Visual Roadmap / Mind Map
 
-Use the checkboxes as the source of truth. Mark a phase complete only when its exit test feels achievable without following a solution step by step. If I need to revisit a topic, that is normal—not failure.
+This map shows how the topics connect and which direction to take. The path is deliberately not “complete every Academy item before doing anything real.” Build fundamentals, practise a repeatable method, then start low-risk, authorised VDP research when ready. Advanced branches can be revisited over time.
 
-| Phase | Focus | Status | Exit test |
-|---|---|---|---|
-| **0** | Safe testing, HTTP basics, and lab setup | ⬜ Not yet recorded | I can explain the request/response cycle and stay within authorised scope. |
-| **1** | Application mapping and Burp workflow | 🟡 Current | I can map a feature, capture traffic, and explain the important parts of the request and response. |
-| **2** | Authentication and access control | ⬜ Not started | I can reason about identity, sessions, roles, ownership, and server-side authorisation. |
-| **3** | Business logic and application state | ⬜ Not started | I can describe the intended workflow, identify unsafe assumptions, and design controlled tests. |
-| **4** | Injection and input-handling vulnerabilities | ⬜ Not started | I can explain how untrusted input reaches a sensitive interpreter, output context, or file operation. |
-| **5** | API testing and server-side attack surfaces | ⬜ Not started | I can inventory endpoints and test the relevant trust and authorisation boundaries. |
-| **6** | In-scope VDP research and report writing | ⬜ Not started | I can submit a reproducible, safe, policy-compliant report with clear demonstrated impact. |
+```mermaid
+flowchart TD
+    A[START: HTTP, sessions, browser/server model, Burp basics] --> B[NOW: Finish SQL injection path<br/>37/51 → 51/51]
+    B --> C[Build broad coverage<br/>Server-side vulnerabilities: Apprentice 0/52]
+    C --> D[Identity and permissions]
+    D --> D1[Authentication vulnerabilities 0/23]
+    D --> D2[Access control and IDOR topic study]
+    D1 --> E[Input and server-side processing]
+    D2 --> E
+    E --> E1[Path traversal 0/24]
+    E --> E2[File upload 1/29]
+    E --> E3[NoSQL injection 0/29]
+    E --> E4[SSRF 0/65]
+    E1 --> F[API and application integration]
+    E2 --> F
+    E3 --> F
+    E4 --> F
+    F --> F1[API testing (progress count not included in snapshot)]
+    F --> F2[GraphQL API vulnerabilities 0/21]
+    F --> F3[CORS 0/14]
+    F --> F4[WebSockets vulnerabilities 0/55]
+    F1 --> G[Browser trust and application state]
+    F2 --> G
+    F3 --> G
+    F4 --> G
+    G --> G1[CSRF 0/46]
+    G --> G2[Clickjacking 0/29]
+    G --> G3[Race conditions 0/35]
+    G --> G4[Web cache deception 0/19]
+    G1 --> H[Advanced / specialised branches]
+    G2 --> H
+    G3 --> H
+    G4 --> H
+    H --> H1[Prototype pollution 0/19]
+    H --> H2[Web LLM attacks 0/30]
+    H1 --> I[VDP readiness gate]
+    H2 --> I
+    I[VDP readiness gate<br/>Scope → map → hypothesis → safe proof → report]
 
-**Status key:** 🟡 Current · ⬜ Not started · 🔵 In progress · ✅ Completed · 🔁 Revisit
+    classDef current fill:#d1fae5,stroke:#047857,color:#064e3b,stroke-width:2px;
+    classDef foundation fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a;
+    classDef advanced fill:#f3e8ff,stroke:#7e22ce,color:#581c87;
+    class B current;
+    class A,C,D,E,F,G foundation;
+    class H,H1,H2 advanced;
+```
 
-### Phase 0 — Foundations and safe workflow
+### How to read the map
 
-- [ ] Understand HTTP requests and responses: method, path, headers, body, status code, cookies.
-- [ ] Understand the roles of browser, frontend, server, database, and external services.
-- [ ] Configure Burp Suite and its browser; understand Proxy and HTTP history.
-- [ ] Use Repeater to resend a request and compare controlled changes.
-- [ ] Learn the difference between authentication and authorisation.
-- [ ] Understand that real-world testing requires explicit authorisation and a clear scope.
+- **Start with the current sprint:** continue SQL injection because meaningful progress is already recorded.
+- **Then build breadth:** use the Apprentice server-side path to connect different server-side vulnerability classes.
+- **Prioritise identity and access:** authentication and object/function-level authorisation are central to understanding real applications.
+- **Follow the data:** path traversal, file uploads, NoSQL injection, and SSRF teach how user-controlled data reaches sensitive operations.
+- **Learn the seams:** APIs, GraphQL, CORS, WebSockets, CSRF, and clickjacking show how components and browser security boundaries interact.
+- **Leave specialised topics for later:** race conditions, cache deception, prototype pollution, and LLM attacks are worth studying, but they do not all need to come before your first careful VDP attempt.
 
-### Phase 1 — Map the application and learn Burp
-
-- [ ] Browse a lab normally before changing requests.
-- [ ] Record pages, actions, endpoints, HTTP methods, parameters, and relevant cookies.
-- [ ] Identify which actions read data and which actions change state.
-- [ ] Record important baseline requests and responses.
-- [ ] Build a simple feature / endpoint inventory.
-- [ ] Write one lab note using the template below.
-- [ ] Explain the request journey without reading the note.
-
-### Phase 2 — Authentication and access control
-
-- [ ] Learn how sessions and cookies represent an authenticated state.
-- [ ] Compare unauthenticated and authenticated behaviour in a lab.
-- [ ] Understand user roles, object ownership, and server-side permission checks.
-- [ ] Study direct object reference / broken object-level authorisation patterns.
-- [ ] Learn common authentication and password-reset design weaknesses.
-- [ ] Practise with accounts and data provided by the lab; never access real users' private data.
-- [ ] Write a note that separates the expected rule, observed behaviour, and proven impact.
-
-### Phase 3 — Business logic and state
-
-- [ ] Map a multi-step workflow before testing it.
-- [ ] Write down the rules the application appears to enforce.
-- [ ] Look for assumptions involving sequence, repetition, quantities, prices, or state transitions.
-- [ ] Test one assumption at a time in a controlled lab.
-- [ ] Explain why the issue is a logic failure rather than merely unusual behaviour.
-
-### Phase 4 — Input handling and injection
-
-- [ ] SQL injection: understand how input interacts with database queries.
-- [ ] Cross-site scripting (XSS): understand browser execution and output context.
-- [ ] Path traversal: understand how file paths are built and constrained.
-- [ ] File upload vulnerabilities: understand validation, storage, processing, and access.
-- [ ] CSRF: understand browser credentials and unintended state-changing requests.
-- [ ] For each topic, learn the root cause, safe proof, impact limits, and mitigation—not just a payload.
-
-### Phase 5 — APIs and server-side attack surfaces
-
-- [ ] Inventory API endpoints, methods, parameters, and response formats.
-- [ ] Understand object-level and function-level authorisation in APIs.
-- [ ] Study server-side request forgery (SSRF) in Academy labs.
-- [ ] Compare API behaviour for different roles and application states.
-- [ ] Learn how to document API requests and responses without leaking secrets.
-
-### Phase 6 — Prepare for the first VDP report
-
-- [ ] Choose one public program and read the entire policy before testing.
-- [ ] Confirm the exact in-scope asset and allowed testing methods.
-- [ ] Record exclusions, rate limits, prohibited tests, and reporting instructions.
-- [ ] Map the application before selecting a small number of hypotheses.
-- [ ] Stop once sufficient safe evidence is obtained; avoid destructive tests and real-user data.
-- [ ] Check whether the issue is reproducible, in scope, security-relevant, and not a known exclusion.
-- [ ] Write a concise report with steps, sanitised evidence, expected versus actual behaviour, and impact.
-- [ ] Keep the outcome as a learning record, whether accepted, duplicate, informative, or out of scope.
+The map is a **recommended route, not a rigid prerequisite graph**. If a lab exposes a gap in HTTP, JavaScript, cookies, or application logic, pause and fill that gap.
 
 ---
 
-## 🧪 My Testing Methodology
+## 🧭 The Order I Will Follow
 
-I want to use the same investigation cycle for every lab and, later, every explicitly authorised target.
+| Step | Focus | Why here? | Completion evidence |
+|---:|---|---|---|
+| **0** | HTTP, sessions, Burp Proxy/HTTP history/Repeater, mapping | Gives every later lab a shared mental model | I can explain a user action from browser to server and back. |
+| **1 — CURRENT** | Finish SQL injection **37/51 → 51/51** | Finish the path already in progress instead of repeatedly switching topics | I can explain the remaining concepts, reproduce key reasoning without a walkthrough, and describe relevant fixes. |
+| **2** | Server-side vulnerabilities — Apprentice **0/52** | Broad, beginner-oriented coverage of common server-side weaknesses | I can classify the vulnerable component and explain how input reaches it. |
+| **3** | Authentication + access control | High-value skills for reasoning about identity, roles, sessions, and ownership | I can test permissions in a controlled lab using accounts and objects I am authorised to access. |
+| **4** | Path traversal, file upload, NoSQL injection, SSRF | Builds data-flow thinking across files, queries, and server-side requests | I can trace input to the sensitive operation, prove the behaviour safely, and explain the root cause. |
+| **5** | API testing, GraphQL, CORS, WebSockets | Expands testing beyond visible web pages into API and protocol behaviour | I can map endpoints and reason about auth, trust boundaries, and cross-origin behaviour. |
+| **6** | CSRF, clickjacking, race conditions, cache deception | Covers browser trust and unexpected application state | I can describe the prerequisite, intended rule, observed failure, and impact. |
+| **7** | Prototype pollution and Web LLM attacks | Specialised topics that benefit from a solid foundation | I can explain the relevant runtime or LLM trust boundary and demonstrate a lab scenario. |
+| **8** | VDP practice | Convert lab skills into safe, scoped testing and clear reporting | I can follow a program policy and write a reproducible report with evidence. |
+
+**Important:** You do not need to finish every learning path before beginning VDP research. Once the foundations, scope discipline, mapping method, and safe proof standards are reliable, you can start mapping one explicitly authorised program while continuing to learn.
+
+---
+
+## 📚 All Learning Paths & My Progress
+
+The progress values below are copied from the dashboard text I supplied. They are a **snapshot**, not a live GitHub integration. Update the count and status after working in PortSwigger. The number is labelled as Academy progress; do not assume each unit corresponds to one independently solved lab.
+
+| Recommended order | Learning path | Academy progress snapshot | Priority | Link |
+|---:|---|---:|---|---|
+| 1 | **SQL injection** | **37/51** | 🟢 Finish current path | [Resume SQL injection](https://portswigger.net/web-security/learning-paths/sql-injection) |
+| 2 | **Server-side vulnerabilities — Apprentice** | **0/52** | 🔵 Broad foundations | [Open learning path](https://portswigger.net/web-security/learning-paths/server-side-vulnerabilities-apprentice) |
+| 3 | **Authentication vulnerabilities** | **0/23** | 🔴 Core VDP skill | [Open learning path](https://portswigger.net/web-security/learning-paths/authentication-vulnerabilities) |
+| 4 | **Path traversal** | **0/24** | 🔴 Core server-side skill | [Open learning path](https://portswigger.net/web-security/learning-paths/path-traversal) |
+| 5 | **File upload vulnerabilities** | **1/29** | 🔴 Core server-side skill | [Open learning path](https://portswigger.net/web-security/learning-paths/file-upload-vulnerabilities) |
+| 6 | **NoSQL injection** | **0/29** | 🟠 Server-side input handling | [Open learning path](https://portswigger.net/web-security/learning-paths/nosql-injection) |
+| 7 | **Server-side request forgery (SSRF)** | **0/65** | 🟠 Server-side trust boundaries | [Open learning path](https://portswigger.net/web-security/learning-paths/ssrf-attacks) |
+| 8 | **API testing** | Not visible in supplied snapshot | 🟠 After current sprint | [Resume API testing](https://portswigger.net/web-security/learning-paths/api-testing) |
+| 9 | **GraphQL API vulnerabilities** | **0/21** | 🟠 API branch | [Open learning path](https://portswigger.net/web-security/learning-paths/graphql-api-vulnerabilities) |
+| 10 | **Cross-origin resource sharing (CORS)** | **0/14** | 🟠 Browser/API boundary | [Open learning path](https://portswigger.net/web-security/learning-paths/cors) |
+| 11 | **WebSockets vulnerabilities** | **0/55** | 🟠 Protocol-specific testing | [Open learning path](https://portswigger.net/web-security/learning-paths/websockets-security-vulnerabilities) |
+| 12 | **Cross-site request forgery (CSRF)** | **0/46** | 🟠 Browser trust | [Open learning path](https://portswigger.net/web-security/learning-paths/csrf) |
+| 13 | **Clickjacking (UI redressing)** | **0/29** | 🟠 Browser trust | [Open learning path](https://portswigger.net/web-security/learning-paths/clickjacking) |
+| 14 | **Race conditions** | **0/35** | 🟣 Advanced state handling | [Open learning path](https://portswigger.net/web-security/learning-paths/race-conditions) |
+| 15 | **Web cache deception** | **0/19** | 🟣 Advanced request/cache behaviour | [Open learning path](https://portswigger.net/web-security/learning-paths/web-cache-deception) |
+| 16 | **Prototype pollution** | **0/19** | 🟣 Advanced JavaScript/runtime behaviour | [Open learning path](https://portswigger.net/web-security/learning-paths/prototype-pollution) |
+| 17 | **Web LLM attacks** | **0/30** | 🟣 Specialised / later | [Open learning path](https://portswigger.net/web-security/learning-paths/llm-attacks) |
+
+### Useful topic pages alongside the learning paths
+
+Some important topics are available as topic pages rather than separate cards in the progress snapshot above. Add these to the roadmap when useful:
+
+- [Access control](https://portswigger.net/web-security/access-control) — object ownership, roles, and authorisation checks.
+- [Business logic vulnerabilities](https://portswigger.net/web-security/logic-flaws) — workflows, assumptions, and state transitions.
+- [Cross-site scripting (XSS)](https://portswigger.net/web-security/cross-site-scripting) — browser-side execution and output context.
+- [XML external entity (XXE) injection](https://portswigger.net/web-security/xxe) — unsafe XML parser behaviour.
+- [HTTP request smuggling](https://portswigger.net/web-security/request-smuggling) — disagreement between HTTP-processing components.
+- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) — a broader testing reference.
+
+---
+
+## 🧪 The Method I Will Use for Every Lab
 
 ```text
-UNDERSTAND
-    ↓
-MAP THE FEATURE AND REQUESTS
-    ↓
-FORM ONE SECURITY HYPOTHESIS
-    ↓
-ESTABLISH A BASELINE
-    ↓
-CHANGE ONE VARIABLE AND TEST
-    ↓
-COMPARE THE EVIDENCE
-    ↓
-VERIFY IMPACT SAFELY
-    ↓
-EXPLAIN ROOT CAUSE AND MITIGATION
-    ↓
-DOCUMENT + RECALL FROM MEMORY
+UNDERSTAND THE FEATURE
+        ↓
+MAP REQUESTS, ROLES, INPUTS AND STATE
+        ↓
+WRITE ONE SECURITY HYPOTHESIS
+        ↓
+CAPTURE A NORMAL BASELINE
+        ↓
+CHANGE ONE VARIABLE
+        ↓
+COMPARE REQUESTS AND RESPONSES
+        ↓
+VERIFY THE BEHAVIOUR SAFELY
+        ↓
+EXPLAIN ROOT CAUSE, IMPACT AND DEFENCE
+        ↓
+DOCUMENT IT AND RECALL FROM MEMORY
 ```
 
-### Questions I ask about every feature
+### Questions I ask about each feature
 
 | Lens | Questions |
 |---|---|
 | **Identity** | Who does the application believe is making this request? |
-| **Authority** | What should this user be allowed to read or change? Where is that enforced? |
-| **Input** | Which values can the user influence? How are they validated and used? |
-| **State** | What changes after this action? Does the order or repetition of actions matter? |
-| **Data flow** | Where does an input go after the server receives it? |
-| **Trust boundary** | Which component assumes another component has checked something? |
-| **Evidence** | What did I observe directly? What am I only assuming? |
-| **Impact** | What security consequence can I actually demonstrate? |
+| **Authority** | What should this user be allowed to read or change? Which server-side control enforces it? |
+| **Input** | Which values can I influence, and where do they go? |
+| **State** | What changes after the action? Does order or repetition matter? |
+| **Data flow** | Does the input reach a query, HTML output, file operation, internal request, or another interpreter? |
+| **Trust boundary** | Is one component relying on another to enforce a rule? |
+| **Evidence** | What did I observe directly, and what am I assuming? |
+| **Impact** | What security consequence is actually demonstrated? What remains unproven? |
 
-### My hypothesis format
+### Hypothesis format
 
-> **I suspect** `[feature / endpoint]` may violate `[security rule]` because `[specific observation]`. I will compare `[baseline]` with `[one controlled change]`. If the result is `[expected evidence]`, it supports the hypothesis; if not, I will revise or reject it.
+> **I suspect** `[feature / endpoint]` may violate `[security rule]` because `[specific observation]`. I will compare `[baseline]` with `[one controlled change]`. If I observe `[expected evidence]`, that supports the hypothesis; otherwise, I will revise or reject it.
 
----
+### Burp workflow reminders
 
-## 📚 PortSwigger Learning Order
-
-This order is a practical study plan, not a requirement to complete every Academy lab before moving forward. Use the official learning material and labs; write the reasoning in my own words.
-
-| Order | Topic | Resource | My progress |
-|---:|---|---|---|
-| 1 | Getting started with web security | [Getting started](https://portswigger.net/web-security/getting-started) | ⬜ |
-| 2 | Burp Suite workflow and mapping | [Testing workflow](https://portswigger.net/burp/documentation/desktop/testing-workflow) | 🟡 |
-| 3 | Access control | [Access control](https://portswigger.net/web-security/access-control) | ⬜ |
-| 4 | Authentication | [Authentication vulnerabilities](https://portswigger.net/web-security/learning-paths/authentication-vulnerabilities) | ⬜ |
-| 5 | Business logic | [Business logic vulnerabilities](https://portswigger.net/web-security/logic-flaws) | ⬜ |
-| 6 | SQL injection | [SQL injection](https://portswigger.net/web-security/learning-paths/sql-injection) | ⬜ |
-| 7 | Cross-site scripting | [Cross-site scripting](https://portswigger.net/web-security/cross-site-scripting) | ⬜ |
-| 8 | File upload | [File upload vulnerabilities](https://portswigger.net/web-security/learning-paths/file-upload-vulnerabilities) | ⬜ |
-| 9 | Path traversal | [Path traversal](https://portswigger.net/web-security/file-path-traversal) | ⬜ |
-| 10 | CSRF | [CSRF](https://portswigger.net/web-security/csrf) | ⬜ |
-| 11 | API testing | [API testing](https://portswigger.net/web-security/learning-paths/api-testing) | ⬜ |
-| 12 | SSRF | [SSRF attacks](https://portswigger.net/web-security/learning-paths/ssrf-attacks) | ⬜ |
-
-**Progress rule:** Mark a topic complete only after I can explain its core mechanism, solve representative labs without blindly following a walkthrough, identify the root cause, and describe a meaningful mitigation.
+1. **Proxy / HTTP history:** observe the normal application before experimenting.
+2. **Target / site map:** build an inventory of the paths and functionality I have actually observed.
+3. **Repeater:** test a small, deliberate change and compare responses.
+4. **Decoder / Inspector:** understand encoding, parameters, and request structure when relevant.
+5. **Notes:** save the meaningful baseline, hypothesis, test, result, and conclusion—not every click.
 
 ---
 
-## 📝 My Lab Notes
+## 📝 Lab-Note Template
 
-Keep lab notes in my own words. Record the reasoning and the lesson, not just the successful input.
-
-### Lab journal index
-
-Add one row when I create or update a meaningful lab note. Link to the relevant Markdown file or folder in this repository.
-
-| Date | Topic / lab | Key concept | Result | Notes |
-|---|---|---|---|---|
-| YYYY-MM-DD | First lab to document | HTTP request / response | In progress | Add link here |
-
-Suggested result labels: `Solved independently`, `Solved with hints`, `Revisit`, `Concept understood`, `Blocked`.
-
-### Reusable lab note template
-
-Copy this section into a new Markdown file for each substantial lab.
+Create one Markdown note for each lab or concept worth remembering. The aim is to save the *reasoning*, not only the successful payload.
 
 ```markdown
 # [Lab name] — [Vulnerability class]
 
 ## 1. Goal and normal behaviour
 - What feature am I testing?
-- What should happen normally?
+- What should normally happen?
 
 ## 2. Mental model
-- Browser → request → server → data / service → response
+- Browser → request → server → data/service → response
 - Where does my input go?
-- Which component should enforce the security rule?
+- Which component must enforce the security rule?
 
 ## 3. Attack surface
 - Endpoint and method:
 - User-controlled inputs:
-- Relevant cookies / session:
-- Roles or preconditions:
+- Relevant session/cookies:
+- Roles and preconditions:
 
 ## 4. Hypothesis
 - Expected security rule:
-- Possible broken assumption:
+- Potential broken assumption:
 - Evidence that would support or reject my idea:
 
 ## 5. Experiments
@@ -266,11 +258,11 @@ Copy this section into a new Markdown file for each substantial lab.
 
 ## 6. Root cause
 - What precisely went wrong?
-- Why did the control fail?
+- Why did the existing control fail?
 
-## 7. Impact and limitations
-- What can be demonstrated?
-- Under what conditions?
+## 7. Impact and limits
+- What can I demonstrate?
+- Under which conditions?
 - What remains unproven?
 
 ## 8. Mitigation
@@ -278,76 +270,96 @@ Copy this section into a new Markdown file for each substantial lab.
 - How would I verify the fix?
 
 ## 9. Recall test
-- Can I explain the issue without notes?
-- Can I recognise the same pattern in another context?
-- What related concept should I study next?
+- Can I explain it without notes?
+- Can I recognise the pattern in a different context?
+- Which concept connects to this one?
 
 ## 10. Next action
-- One specific task for the next session:
+- One small, specific task for next session:
 ```
+
+### Suggested repository structure
+
+```text
+.
+├── README.md                 # Roadmap, progress snapshot, and current focus
+├── labs/                     # Individual Academy lab write-ups
+├── concepts/                 # Mental models and cross-topic notes
+├── methodology/              # Repeatable workflows and checklists
+└── scripts/                  # Small, reviewed learning helpers
+```
+
+Create folders only when they are useful. Link to real notes as they are added; never list planned files as if they already exist.
 
 ---
 
-## 🧠 My Daily Focus Routine
+## 🧠 Focus Routine
 
-The aim is to make focused work repeatable—not to create a perfect schedule that collapses after one difficult day.
+My goal is to make focused work repeatable, not to create a perfect timetable that breaks after one difficult day.
 
-### One practical study cycle
+- **35 minutes — investigate:** one topic, one lab, one main question.
+- **10 minutes — explain:** write down the baseline, hypothesis, experiment, result, and lesson.
+- **5 minutes — recall:** close the notes and explain what happened, why it happened, and how it could be prevented.
 
-1. **35 minutes — Learn and investigate.** One topic, one lab, one main objective. Keep unrelated tabs and notifications closed.
-2. **10 minutes — Write the reasoning.** Record the baseline, hypothesis, experiment, evidence, and lesson.
-3. **5 minutes — Recall without notes.** Explain what happened and why. Write down what remains unclear.
-
-If 35 minutes feels too difficult on a particular day, start with 10 focused minutes and one small task. Consistency matters more than forcing a long session.
+If 35 minutes feels too hard on a particular day, start with 10 focused minutes and one small task. Keep unrelated tabs and notifications out of the session. Consistency matters more than forcing a long session.
 
 ### Session checklist
 
 - [ ] I chose one concrete task before starting.
-- [ ] I kept unrelated distractions out of the session.
-- [ ] I tested or explained something instead of only consuming content.
-- [ ] I recorded at least one useful observation.
-- [ ] I wrote the next action so I can restart easily.
+- [ ] I stayed with the task instead of switching learning sources every few minutes.
+- [ ] I tested or explained something, rather than only consuming content.
+- [ ] I recorded one useful observation.
+- [ ] I wrote the next action before stopping.
 
 ---
 
 ## 🎯 Journey to My First VDP Report
 
-The goal is to build the skill to produce a good report, not to guarantee a finding by a deadline. A VDP may be disclosure-only; monetary rewards depend on the individual program's terms.
+A Vulnerability Disclosure Program does not automatically mean a paid bounty. Read the policy for the specific program and confirm exactly what is authorised before testing.
 
-### Before testing a real program
+### Readiness gate
 
-- [ ] Read the policy and confirm the exact asset is in scope.
-- [ ] Understand prohibited activity, rate limits, account rules, and safe-harbour language.
-- [ ] Use only accounts and data I am authorised to use.
-- [ ] Avoid destructive actions, denial of service, social engineering, persistence, and unnecessary access to sensitive data.
-- [ ] Stop after obtaining enough safe evidence to establish the issue.
+- [ ] I can use Burp to map a feature and save the relevant baseline request/response.
+- [ ] I can form a testable hypothesis and change one variable at a time.
+- [ ] I can distinguish authentication from authorisation and explain basic trust boundaries.
+- [ ] I understand the chosen program's scope, exclusions, rate limits, and reporting process.
+- [ ] I know how to stop once enough safe proof has been collected.
+
+### Before testing a real target
+
+- [ ] Read the program policy and verify the exact asset is in scope.
+- [ ] Record prohibited activity, rate limits, account requirements, and disclosure terms.
+- [ ] Use only accounts and data I am authorised to access.
+- [ ] Avoid destructive actions, denial of service, persistence, social engineering, and unnecessary access to sensitive data.
+- [ ] Stop after obtaining sufficient safe evidence; follow program instructions if sensitive information appears.
 
 ### Report-writing checklist
 
-- [ ] **Clear title:** identifies the affected feature and security failure.
-- [ ] **Summary:** explains the weakness in plain language.
+- [ ] **Title:** affected feature and specific security failure.
+- [ ] **Summary:** what is broken and why it matters.
 - [ ] **Affected asset:** exact in-scope host and endpoint.
 - [ ] **Preconditions:** required role, account, or state.
 - [ ] **Reproduction steps:** minimal, numbered, and repeatable.
-- [ ] **Expected vs actual:** states the rule and what occurred.
-- [ ] **Evidence:** sanitised requests, responses, and screenshots where useful.
-- [ ] **Impact:** states what was demonstrated and avoids unsupported claims.
-- [ ] **Remediation idea:** identifies the control or design that should change.
-- [ ] **Policy check:** follows the program's submission and disclosure rules.
+- [ ] **Expected versus actual:** the intended rule and observed behaviour.
+- [ ] **Evidence:** sanitised requests/responses and screenshots when useful.
+- [ ] **Impact:** what was demonstrated, without speculation.
+- [ ] **Remediation idea:** the control or design that should change.
+- [ ] **Policy check:** submission and disclosure rules followed.
 
 ### First-report tracker
 
-| Field | Record |
+| Item | Status |
 |---|---|
-| Program | Not selected yet |
-| Policy reviewed | ⬜ |
-| In-scope asset verified | ⬜ |
-| Feature mapped | ⬜ |
-| Hypothesis tested | ⬜ |
-| Finding reproduced safely | ⬜ |
-| Report drafted | ⬜ |
-| Report submitted | ⬜ |
-| Outcome / lesson | Update when known |
+| Program selected | ⬜ Not started |
+| Policy and scope reviewed | ⬜ Not started |
+| In-scope feature mapped | ⬜ Not started |
+| Hypothesis tested | ⬜ Not started |
+| Finding safely reproduced | ⬜ Not started |
+| Report drafted | ⬜ Not started |
+| Report submitted | ⬜ Not started |
+| Outcome and lesson documented | ⬜ Not started |
+
+My first report may be duplicate, out of scope, informative, or not accepted. Each outcome is information to learn from. The objective is to develop reliable investigation and reporting skills—not to promise myself a finding by a deadline.
 
 ---
 
@@ -355,40 +367,23 @@ The goal is to build the skill to produce a good report, not to guarantee a find
 
 A lab is not truly learned just because the Academy marks it solved. I should be able to:
 
-- Explain the normal application behaviour and the security rule involved.
-- Describe the relevant request, response, state, and trust boundary.
-- Reconstruct the test from my notes without copying a solution blindly.
+- Explain the feature's normal behaviour and the security rule involved.
+- Describe the relevant requests, responses, state, and trust boundary.
+- Reconstruct the test without blindly copying a walkthrough.
 - Explain the root cause and a realistic mitigation.
-- State exactly what the evidence proves—and what it does not prove.
+- State exactly what the evidence proves and what it does not prove.
 - Connect the concept to at least one related topic.
 
-## 📌 Repository Structure
+## 🔗 Core Resources
 
-As the journal grows, keep it easy to navigate. Use folders and links that match the files actually present in the repository.
-
-```text
-.
-├── README.md                         # Progress dashboard and current focus
-├── PortSwigger-Academy-Methodology/  # Methodology notes and topic guides
-├── labs/                             # Individual lab write-ups (add as needed)
-├── notes/                            # Concepts, diagrams, and revision notes (add as needed)
-└── scripts/                          # Small, reviewed learning helpers (add as needed)
-```
-
-The folders shown as “add as needed” are a suggested future structure; create them only when they are useful.
+- [PortSwigger Web Security Academy — Learning Paths](https://portswigger.net/web-security/learning-paths)
+- [Burp Suite testing workflow](https://portswigger.net/burp/documentation/desktop/testing-workflow)
+- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
 ---
 
-## 🔗 Useful Resources
-
-- [PortSwigger Web Security Academy](https://portswigger.net/web-security/learning-paths) — free learning paths and interactive labs.
-- [Burp Suite documentation](https://portswigger.net/burp/documentation) — learn the tools and workflows.
-- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) — a structured reference for web application testing.
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/) — a broad awareness overview of major web application risk categories.
-
----
-
-## Final Reminder
+## A Final Reminder
 
 **The mission is not to rush through labs. It is to become better at observing, reasoning, testing, and explaining.**
 
