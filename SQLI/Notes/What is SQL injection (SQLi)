@@ -165,7 +165,7 @@ well amazing now we have all notes regarding this type of vulnerability we need 
 
 ---
 
-## Database-specific syntax
+## Database-specific syntax [Lab SQL injection UNION attack, finding a column containing text](../Labs/Lab%2520SQL%2520injection%2520UNION%2520attack,%2520finding%2520a%2520column%2520containing%2520text.md#)
 
 ---
 
@@ -190,3 +190,5 @@ If the column data type is not compatible with string data, the injected query w
 `Conversion failed when converting the varchar value 'a' to data type int.`
 
 If an error does not occur, and the application's response contains some additional content including the injected string value, then the relevant column is suitable for retrieving string data.
+
+==🔴*well i know this time they gave us the DB's but what if i don't have how do i know wish DB i'm dealing with [SQLi](../Question%2520to%2520answer/SQLi.md#)*==
