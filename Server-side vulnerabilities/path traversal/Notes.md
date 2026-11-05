@@ -64,4 +64,95 @@ https://insecure-website.com/loadImage?filename=..\..\..\windows\win.ini
 
 
 
+![](../../attachments/Pasted%20image%2020261105190209.png)
+
+
+## Vertical privilege escalation
+
+If a user can gain access to functionality that they are not permitted to access then this is vertical privilege escalation. For example, if a non-administrative user can gain access to an admin page where they can delete user accounts, then this is vertical privilege escalation.
+
+
+
+## Unprotected functionality
+
+At its most basic, vertical privilege escalation arises where an application does not enforce any protection for sensitive functionality. For example, administrative functions might be linked from an administrator's welcome page but not from a user's welcome page. However, a user might be able to access the administrative functions by browsing to the relevant admin URL.
+
+For example, a website might host sensitive functionality at the following URL:
+
+```
+https://insecure-website.com/
+```
+
+This might be accessible by any user, not only administrative users who have a link to the functionality in their user interface. In some cases, the administrative URL might be disclosed in other locations, such as the `robots.txt` file:
+
+```
+https://insecure-website.com/robots.txt
+```
+
+Even if the URL isn't disclosed anywhere, an attacker may be able to use a wordlist to brute-force the location of the sensitive functionality.
+
+## Unprotected functionality - Continued
+
+In some cases, sensitive functionality is concealed by giving it a less predictable URL. This is an example of so-called "security by obscurity". However, hiding sensitive functionality does not provide effective access control because users might discover the obfuscated URL in a number of ways.
+
+Imagine an application that hosts administrative functions at the following URL:
+
+```
+https://insecure-website.com/administrator-panel-yb556
+```
+
+This might not be directly guessable by an attacker. However, the application might still leak the URL to users. The URL might be disclosed in JavaScript that constructs the user interface based on the user's role:
+
+```
+`<script> var isAdmin = false; if (isAdmin) { ... var adminPanelTag = document.createElement('a'); adminPanelTag.setAttribute('href', 'https://insecure-website.com/administrator-panel-yb556'); adminPanelTag.innerText = 'Admin panel'; ... } </script>`
+
+```
+
+
+This script adds a link to the user's UI if they are an admin user. However, the script containing the URL is visible to all users regardless of their role.
+
+
+[Unprotected admin functionality with unpredictable URL](./Labs/Unprotected%2520admin%2520functionality%2520with%2520unpredictable%2520URL.md#)
+
+
+
+## Parameter-based access control methods
+
+Some applications determine the user's access rights or role at login, and then store this information in a user-controllable location. This could be:
+
+- A hidden field.
+- A cookie.
+- A preset query string parameter.
+
+The application makes access control decisions based on the submitted value. For example:
+
+```
+https://insecure-website.com/login/home.jsp?admin=true https://insecure-website.com/login/home.jsp?role=1
+```
+
+This approach is insecure because a user can modify the value and access functionality they're not authorized to, such as administrative functions.
+
+
+
+[User role controlled by request parameter](./Labs/User%2520role%2520controlled%2520by%2520request%2520parameter.md#)
+
+
+
+## Horizontal privilege escalation
+
+Horizontal privilege escalation occurs if a user is able to gain access to resources belonging to another user, instead of their own resources of that type. For example, if an employee can access the records of other employees as well as their own, then this is horizontal privilege escalation.
+
+Horizontal privilege escalation attacks may use similar types of exploit methods to vertical privilege escalation. For example, a user might access their own account page using the following URL:
+
+```
+https://insecure-website.com/myaccount?id=123
+```
+
+If an attacker modifies the `id` parameter value to that of another user, they might gain access to another user's account page, and the associated data and functions.
+
+#### Note
+
+This is an example of an insecure direct object reference (IDOR) vulnerability. This type of vulnerability arises where user-controller parameter values are used to access resources or functions directly.
+
+In some applications, the exploitable parameter does not have a predictable value. For example, instead of an incrementing number, an application might use globally unique identifiers (GUIDs) to identify users. This may prevent an attacker from guessing or predicting another user's identifier. However, the GUIDs belonging to other users might be disclosed elsewhere in the application where users are referenced, such as user messages or reviews.
 
