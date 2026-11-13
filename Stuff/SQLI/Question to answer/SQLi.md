@@ -1,0 +1,1 @@
+you should answer like how TF we are going to find out what is the type of the DB's is that ?
