@@ -103,3 +103,225 @@ API endpoints often expect data in a specific format. They may therefore behave 
 To change the content type, modify the `Content-Type` header, then reformat the request body accordingly. You can use the Content type converter BApp to automatically convert data submitted within requests between XML and JSON.
 
 
+## Using Intruder to find hidden endpoints
+
+Once you have identified some initial API endpoints, you can use Intruder to uncover hidden endpoints. For example, consider a scenario where you have identified the following API endpoint for updating user information:
+
+`PUT /api/user/update`
+
+To identify hidden endpoints, you could use Burp Intruder to find other resources with the same structure. For example, you could add a payload to the `/update` position of the path with a list of other common functions, such as `delete` and `add`.
+
+When looking for hidden endpoints, use wordlists based on common API naming conventions and industry terms. Make sure you also include terms that are relevant to the application, based on your initial recon.
+
+
+## Finding hidden parameters
+
+When you're doing API recon, you may find undocumented parameters that the API supports. You can attempt to use these to change the application's behavior. Burp includes numerous tools that can help you identify hidden parameters:
+
+- Burp Intruder enables you to automatically discover hidden parameters, using a wordlist of common parameter names to replace existing parameters or add new parameters. Make sure you also include names that are relevant to the application, based on your initial recon.
+- The Param miner BApp enables you to automatically guess up to 65,536 param names per request. Param miner automatically guesses names that are relevant to the application, based on information taken from the scope.
+- The Content discovery tool enables you to discover content that isn't linked from visible content that you can browse to, including parameters.
+
+
+
+## Identifying hidden parameters
+
+Since mass assignment creates parameters from object fields, you can often identify these hidden parameters by manually examining objects returned by the API.
+
+For example, consider a `PATCH /api/users/` request, which enables users to update their username and email, and includes the following JSON:
+
+```
+`{ "username": "wiener", "email": "wiener@example.com", }`
+```
+
+
+A concurrent `GET /api/users/123` request returns the following JSON:
+
+```
+`{ "id": 123, "name": "John Doe", "email": "john@example.com", "isAdmin": "false" }`
+```
+
+
+This may indicate that the hidden `id` and `isAdmin` parameters are bound to the internal user object, alongside the updated username and email parameters.
+
+
+## Testing mass assignment vulnerabilities
+
+To test whether you can modify the enumerated `isAdmin` parameter value, add it to the `PATCH` request:
+
+```
+`{ "username": "wiener", "email": "wiener@example.com", "isAdmin": false, }`
+```
+
+In addition, send a `PATCH` request with an invalid `isAdmin` parameter value:
+
+```
+`{ "username": "wiener", "email": "wiener@example.com", "isAdmin": "foo", }`
+```
+
+
+If the application behaves differently, this may suggest that the invalid value impacts the query logic, but the valid value doesn't. This may indicate that the parameter can be successfully updated by the user.
+
+You can then send a `PATCH` request with the `isAdmin` parameter value set to `true`, to try and exploit the vulnerability:
+
+```
+`{ "username": "wiener", "email": "wiener@example.com", "isAdmin": true, }`
+```
+
+
+If the `isAdmin` value in the request is bound to the user object without adequate validation and sanitization, the user `wiener` may be incorrectly granted admin privileges. To determine whether this is the case, browse the application as `wiener` to see whether you can access admin functionality.
+
+
+
+## Preventing vulnerabilities in APIs
+
+When designing APIs, make sure that security is a consideration from the beginning. In particular, make sure that you:
+
+- Secure your documentation if you don't intend your API to be publicly accessible.
+- Ensure your documentation is kept up to date so that legitimate testers have full visibility of the API's attack surface.
+- Apply an allowlist of permitted HTTP methods.
+- Validate that the content type is expected for each request or response.
+- Use generic error messages to avoid giving away information that may be useful for an attacker.
+- Use protective measures on all versions of your API, not just the current production version.
+
+To prevent mass assignment vulnerabilities, allowlist the properties that can be updated by the user, and blocklist sensitive properties that shouldn't be updated by the user.
+
+
+## Server-side parameter pollution
+
+Some systems contain internal APIs that aren't directly accessible from the internet. Server-side parameter pollution occurs when a website embeds user input in a server-side request to an internal API without adequate encoding. This means that an attacker may be able to manipulate or inject parameters, which may enable them to, for example:
+
+- Override existing parameters.
+- Modify the application behavior.
+- Access unauthorized data.
+
+You can test any user input for any kind of parameter pollution. For example, query parameters, form fields, headers, and URL path parameters may all be vulnerable.
+
+
+
+![](../attachments/Pasted%20image%2020261114132649.png)
+
+
+
+![](../attachments/Pasted%20image%2020261114132704.png)
+
+
+## Testing for server-side parameter pollution in the query string
+
+To test for server-side parameter pollution in the query string, place query syntax characters like `#`, `&`, and `=` in your input and observe how the application responds.
+
+Consider a vulnerable application that enables you to search for other users based on their username. When you search for a user, your browser makes the following request:
+
+```
+`GET /userSearch?name=peter&back=/home`
+```
+
+
+To retrieve user information, the server queries an internal API with the following request:
+
+```
+`GET /users/search?name=peter&publicProfile=true`
+```
+
+
+## Truncating query strings
+
+You can use a URL-encoded `#` character to attempt to truncate the server-side request. To help you interpret the response, you could also add a string after the `#` character.
+
+For example, you could modify the query string to the following:
+
+```
+`GET /userSearch?name=peter%23foo&back=/home`
+```
+
+
+The front-end will try to access the following URL:
+
+```
+`GET /users/search?name=peter#foo&publicProfile=true`
+```
+
+
+#### Note
+
+It's essential that you URL-encode the `#` character. Otherwise the front-end application will interpret it as a fragment identifier and it won't be passed to the internal API.
+
+Review the response for clues about whether the query has been truncated. For example, if the response returns the user `peter`, the server-side query may have been truncated. If an `Invalid name` error message is returned, the application may have treated `foo` as part of the username. This suggests that the server-side request may not have been truncated.
+
+If you're able to truncate the server-side request, this removes the requirement for the `publicProfile` field to be set to true. You may be able to exploit this to return non-public user profiles.
+
+
+
+## Injecting invalid parameters
+
+You can use an URL-encoded `&` character to attempt to add a second parameter to the server-side request.
+
+For example, you could modify the query string to the following:
+
+```
+`GET /userSearch?name=peter%26foo=xyz&back=/home`
+```
+
+
+This results in the following server-side request to the internal API:
+
+```
+`GET /users/search?name=peter&foo=xyz&publicProfile=true`
+```
+
+
+Review the response for clues about how the additional parameter is parsed. For example, if the response is unchanged this may indicate that the parameter was successfully injected but ignored by the application.
+
+To build up a more complete picture, you'll need to test further.
+
+
+## Injecting valid parameters
+
+If you're able to modify the query string, you can then attempt to add a second valid parameter to the server-side request.
+
+#### Related pages
+
+For information on how to identify parameters that you can inject into the query string, see the Finding hidden parameters section.
+
+For example, if you've identified the `email` parameter, you could add it to the query string as follows:
+
+```
+`GET /userSearch?name=peter%26email=foo&back=/home`
+```
+
+
+This results in the following server-side request to the internal API:
+
+```
+`GET /users/search?name=peter&email=foo&publicProfile=true`
+```
+
+
+Review the response for clues about how the additional parameter is parsed.
+
+## Overriding existing parameters
+
+To confirm whether the application is vulnerable to server-side parameter pollution, you could try to override the original parameter. Do this by injecting a second parameter with the same name.
+
+For example, you could modify the query string to the following:
+
+```
+`GET /userSearch?name=peter%26name=carlos&back=/home`
+```
+
+This results in the following server-side request to the internal API:
+
+```
+`GET /users/search?name=peter&name=carlos&publicProfile=true`
+```
+
+
+The internal API interprets two `name` parameters. The impact of this depends on how the application processes the second parameter. This varies across different web technologies. For example:
+
+- PHP parses the last parameter only. This would result in a user search for `carlos`.
+- ASP.NET combines both parameters. This would result in a user search for `peter,carlos`, which might result in an `Invalid username` error message.
+- Node.js / express parses the first parameter only. This would result in a user search for `peter`, giving an unchanged result.
+
+If you're able to override the original parameter, you may be able to conduct an exploit. For example, you could add `name=administrator` to the request. This may enable you to log in as the administrator user.
+
+
